@@ -1,0 +1,21 @@
+name: Love Reminder
+
+on:
+  schedule:
+    # 12:00 по UTC+5 = 07:00 UTC
+    - cron: '0 7 * * *'
+    # 18:00 по UTC+5 = 13:00 UTC  
+    - cron: '0 13 * * *'
+  workflow_dispatch:  # Позволяет запускать вручную
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send Telegram message
+      run: |
+        curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+          -d chat_id="${{ secrets.CHAT_ID }}" \
+          -d text="Аришка, Паша тебя любит, помни это ❤️" \
+          -d parse_mode="HTML"
+      timeout-minutes: 1
