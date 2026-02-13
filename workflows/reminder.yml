@@ -13,9 +13,9 @@ jobs:
   send-message:
     runs-on: ubuntu-latest
     steps:
-    - name: Send love message
-      run: |
-        MESSAGES='[
+      - name: Send love message
+        run: |
+          MESSAGES='[
             "Ариша, проснулся и первая мысль — о тебе. Как ты спала? ☀️",
             "Моя Аришка, ты сегодня снилась мне в самых добрых снах 💭",
             "Когда думаю о тебе, внутри расцветает весна 🌸",
@@ -326,12 +326,12 @@ jobs:
             "Аришка, ты — мой самый уютный дом в этом мире 🏡",
             "Ты делаешь мою жизнь мягче и добрее 🌸",
             "Хочу быть тем, кто хранит твои слёзы и улыбки с одинаковой нежностью 💧"
-        ]'
-        
-        COUNT=$(echo "$MESSAGES" | jq '. | length')
-        INDEX=$((RANDOM % COUNT))
-        MSG=$(echo "$MESSAGES" | jq -r ".[$INDEX]")
-        
-        curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
-          -H "Content-Type: application/json" \
-          -d "{\"chat_id\":\"${{ secrets.CHAT_ID }}\",\"text\":\"$MSG\"}"
+          ]'
+          
+          COUNT=$(echo "$MESSAGES" | jq -r '. | length')
+          INDEX=$((RANDOM % COUNT))
+          MSG=$(echo "$MESSAGES" | jq -r ".[$INDEX]")
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+            -H "Content-Type: application/json" \
+            -d "{\"chat_id\":\"${{ secrets.CHAT_ID }}\",\"text\":\"$MSG\"}"
